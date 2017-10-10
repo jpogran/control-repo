@@ -2,15 +2,11 @@ class profile::iis {
 
   $iis_features = [
     'Web-WebServer',
-    'Web-Http-Errors',
-    'Web-Http-Logging',
     'Web-Asp-Net45',
-    'NET-Framework-45-ASPNET',
   ]
 
   windowsfeature{ $iis_features:
     ensure => present,
-    # installmanagementtools => true,
   } ~>
 
   # Remove default binding by removing default website
@@ -19,5 +15,25 @@ class profile::iis {
     dsc_ensure       => 'Absent',
     dsc_name         => 'Default Web Site',
     dsc_applicationpool => 'DefaultAppPool',
+  }
+
+  file{'C:\testsite':
+    ensure => 'directory'
+  }
+
+  file{'C:\testsite\index.html':
+    ensure  => 'file'
+    content => '<h1>Hello World</h1>'
+  }
+
+  dsc_xwebsite{'NewWebsite':
+    dsc_ensure       => 'Present'
+    dsc_state        => 'Started'
+    dsc_name         => 'TestSite'
+    dsc_physicalpath => 'C:\testsite'
+    dsc_bindinginfo  => MSFT_xWebBindingInformation {
+      Protocol => 'HTTP'
+      Port     => '80'
+    }
   }
 }
