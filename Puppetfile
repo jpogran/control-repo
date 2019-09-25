@@ -5,7 +5,7 @@ forge "http://forge.puppetlabs.com"
 #mod "puppetlabs/inifile",     '1.5.0'
 #mod "puppetlabs/stdlib",      '4.11.0'
 #mod "puppetlabs/concat",      '2.1.0'
-mod "puppetlabs/dsc", '1.4.0'
+mod "puppetlabs/dsc", '1.9.3'
 
 mod "puppet/windowsfeature", '2.0.0'
 
